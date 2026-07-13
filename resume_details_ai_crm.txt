@@ -1,0 +1,36 @@
+Project Name: AI-Powered CRM Intelligence System
+
+Summary / Objective:
+Developed a comprehensive AI CRM Intelligence System to automate the analysis of customer support dialogues. The system processes raw customer conversations and instantly generates concise summaries, categorizes the intent, detects sentiment, and assigns a priority level, significantly reducing manual triage time and improving customer response times.
+
+Key Responsibilities & Accomplishments:
+- Architected and developed an end-to-end NLP pipeline using Python, PyTorch, and the Hugging Face Transformers library.
+- Implemented a "Smart Summarization Router" that dynamically selects the optimal summarization model based on input text length. Medium-length dialogues were routed to a custom fine-tuned T5 model (optimized on SAMSum dataset), while longer transcripts were processed using a pre-trained BART-large-CNN model to maximize accuracy and resource efficiency.
+- Integrated a Zero-Shot Classification model (BART-large-MNLI) to automatically categorize customer tickets into actionable buckets (e.g., "complaints," "service booking," "urgent problems"), achieving high confidence without requiring labeled domain-specific training data. Added fallback logic for short casual conversations.
+- Deployed a robust sentiment analysis pipeline utilizing a fine-tuned DistilBERT model to accurately gauge customer emotions and satisfaction.
+- Engineered a custom priority-scoring algorithm that intelligently combines sentiment scores with urgency keyword heuristics to assign "High", "Medium", or "Low" priority, ensuring critical issues are escalated immediately.
+- Designed and built a responsive, user-friendly frontend interface using Streamlit, enabling seamless interaction, real-time inference, and visual reporting of confidence metrics for both sentiment and category detection.
+- Developed custom preprocessing functions using Regex to clean dialogue transcripts by stripping speaker identifiers before feeding data into the NLP models, improving model accuracy and generation quality.
+- Implemented application caching strategies using Streamlit's `@st.cache_resource` to load multiple heavy NLP models into memory efficiently, optimizing application startup and inference times.
+
+Technologies & Tools Used:
+- Programming Languages: Python
+- Machine Learning / NLP: PyTorch, Hugging Face Transformers, Natural Language Processing (NLP)
+- Models Used: T5 (Fine-tuned for dialogue summarization), facebook/bart-large-cnn (Extractive/Abstractive Summarization), distilbert-base-uncased-finetuned-sst-2-english (Sentiment Analysis), facebook/bart-large-mnli (Zero-Shot Classification)
+- Frameworks / UI: Streamlit
+- Libraries: Regex (re), Torch
+
+Potential Bullet Points for Resume (Tailor these to your needs):
+- Developed an AI CRM Intelligence System using Python and Streamlit, automating the triage of customer dialogues by providing real-time summaries, sentiment analysis, and intent classification.
+- Fine-tuned and deployed a T5 model for dialogue summarization and integrated BART-large-CNN with a dynamic routing mechanism based on text length to optimize processing efficiency.
+- Utilized Zero-Shot Classification (BART-MNLI) to categorize customer queries and DistilBERT for sentiment analysis, creating a custom priority-scoring algorithm that increased ticket resolution efficiency.
+- Built a streamlined UI with Streamlit to visualize model confidence scores and real-time CRM analytics, bridging the gap between complex NLP models and end-users.
+- Implemented efficient model loading and inference pipelines using PyTorch and Hugging Face, reducing latency for complex natural language tasks.
+
+Detailed Breakdown of What We Did (For your own reference/interviews):
+1. UI Setup: Used Streamlit to build a web-based dashboard allowing users to input raw customer dialogues and get instant analysis.
+2. Model Loading & Caching: Used Streamlit caching to load 4 different heavy models efficiently in memory without reloading them upon every button click.
+3. Preprocessing: Created a cleaning function to remove speaker names (e.g., "Agent:", "Customer:") using Regular Expressions, so the models only focus on the conversation context.
+4. Smart Routing for Summarization: If the text is short (<20 words), it skips summarization. If medium (<150 words), it uses the locally fine-tuned T5 model. If long, it switches to a more robust BART model, managing resources and latency effectively while ensuring high-quality output.
+5. Zero-Shot Classification: Used a BART model trained on Multi-Genre Natural Language Inference (MNLI) to classify dialogues into predefined CRM categories without explicit training on our own data. We also added custom logic to intercept casual short chats efficiently to bypass heavy processing.
+6. Sentiment & Priority Routing: Extracted sentiment using DistilBERT. Created logic that flags a ticket as "High" priority if certain urgent keywords ("urgent", "immediately", "asap", "refund") are detected, or "Medium" if sentiment is negative, otherwise "Low".
